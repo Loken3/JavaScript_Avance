@@ -1,66 +1,62 @@
+class Carre {
+    constructor(){
+      this.x=10;
+      this.y=10;
+      this.monInterval=setInterval(this.boucle,100);
 
-var intervalID;
-var x = 10;
-var y = 10;
-var canvas = document.getElementById('tutorial');
-var ctx =  canvas.getContext('2d');
+    }
 
-class Square {
-  constructor(x0,y0) {
-    this.x = x0;
-    this.y = y0;
-    this.clear = function() {
-      ctx.clearRect(this.x,this.y,50,50);
-    };
-  };
+    draw(x,y){
+      let canvas=document.getElementById('tutorial');
+      if(canvas.getContext){
+        let ctx=canvas.getContext('2d');
+        ctx.fillStyle='rgb(200,0,0)';
+        ctx.fillRect(x,y,50,50);
+      }
+    }
 
-  this.update = function() {
-    this.x = this.x+1;
-    this.y = this.y+1;
-  };
+    maj(){
+      this.y=this.y+1;
+    }
 
-  this.draw = function() {
-    console.log(this.x+','+this.y);
-    ctx.fillRect(this.x,this.y,50,50);
-    ctx.fillStyle = 'rgb(200, 0, 0)';
-  };
-}
-
-/*
-function draw(x,y) {
-  let canvas = document.getElementById('tutorial');
-  if(x > 240)
-  {
-    clearInterval(intervalID);
+    clear(){
+      let canvas=document.getElementById('tutorial');
+      if(canvas.getContext){
+        let ctx=canvas.getContext('2d');
+        ctx.clearRect(this.x,this.y,50,50);
+      }
+    }
   }
-  if(canvas.getContext) {
 
+  var carre1=new Carre();
+  var carre2=new Carre();
+  var carre3=new Carre();
+
+  function boucle(carre){
+    if(carre.y<300){
+      carre.clear();
+      carre.maj();
+      carre.draw(carre.x,carre.y);
+    } else {
+      carre.clear();
+      carre.x=10;
+      carre.y=10;
+    }
   }
-}*/
 
-function maj() {
-  x = x+1;
-}
-
-function clear() {
-  let canvas = document.getElementById('tutorial');
-  if(canvas.getContext) {
-    let ctx =  canvas.getContext('2d');
-    ctx.clearRect(x,y,50,50);
+  function interval1(){
+    return boucle(carre1);
   }
-}
 
-function boucle() {
-  var monCarre = new Square(30,30);
+  function interval2(){
+    return boucle(carre2);
+  }
 
-  monCarre.clear();
-  monCarre.update();
-  monCarre.draw(x,y);
-}
+  function interval3(){
+    return boucle(carre3);
+  }
 
-function start() {
-  var intervalID = setInterval(boucle,100);
-}
+  var c1=setTimeout("setInterval(interval1,10)",4000);
+  var c2=setTimeout("setInterval(interval2,10)",5000);
+  var c3=setTimeout("setInterval(interval3,10)",6000);
 
-
-setTimeout(start,2000);
